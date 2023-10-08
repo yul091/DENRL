@@ -2,4 +2,5 @@ torch
 torchvision
 datasets
 evaluate
-transformers[torch]
+transformers[torch]==4.24.0
+seqeval

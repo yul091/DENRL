@@ -15,9 +15,7 @@
 # limitations under the License.
 """PyTorch OpenAI GPT-2 model."""
 
-import atexit
 import os
-import time
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
@@ -28,8 +26,6 @@ from torch._C import Value
 from torch.nn import CrossEntropyLoss, MSELoss
 from torch.nn.parameter import Parameter
 
-import line_profiler
-
 from transformers.activations import ACT2FN
 from transformers.file_utils import (
     ModelOutput,
@@ -37,12 +33,6 @@ from transformers.file_utils import (
     add_start_docstrings,
     add_start_docstrings_to_model_forward,
     replace_return_docstrings,
-)
-from transformers.modeling_outputs import (
-    BaseModelOutputWithPastAndCrossAttentions,
-    CausalLMOutputWithCrossAttentions,
-    SequenceClassifierOutputWithPast,
-    TokenClassifierOutput,
 )
 from transformers.modeling_utils import (
     Conv1D,
@@ -53,12 +43,18 @@ from transformers.modeling_utils import (
 )
 from transformers.utils import logging
 from transformers.utils.model_parallel_utils import assert_device_map, get_device_map
-from transformers import GPT2Config
+from .configuration_gpt2 import GPT2Config
+from .modeling_outputs import (
+    BaseModelOutputWithPastAndCrossAttentions,
+    CausalLMOutputWithCrossAttentions,
+    SequenceClassifierOutputWithPast,
+    TokenClassifierOutput,
+)
 
-
-profile = line_profiler.LineProfiler()
-atexit.register(profile.print_stats)
-
+# import line_profiler
+# profile = line_profiler.LineProfiler()
+# import atexit
+# atexit.register(profile.print_stats)
 
 logger = logging.get_logger(__name__)
 
@@ -750,7 +746,7 @@ class GPT2Model(GPT2PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(GPT2_INPUTS_DOCSTRING)
     @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
+        # tokenizer_class=_TOKENIZER_FOR_DOC,
         checkpoint=_CHECKPOINT_FOR_DOC,
         output_type=BaseModelOutputWithPastAndCrossAttentions,
         config_class=_CONFIG_FOR_DOC,
@@ -1022,7 +1018,7 @@ class GPT2LMHeadModel(GPT2PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(GPT2_INPUTS_DOCSTRING)
     @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
+        # tokenizer_class=_TOKENIZER_FOR_DOC,
         checkpoint=_CHECKPOINT_FOR_DOC,
         output_type=CausalLMOutputWithCrossAttentions,
         config_class=_CONFIG_FOR_DOC,
@@ -1349,7 +1345,7 @@ class GPT2ForSequenceClassification(GPT2PreTrainedModel):
 
     @add_start_docstrings_to_model_forward(GPT2_INPUTS_DOCSTRING)
     @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
+        # tokenizer_class=_TOKENIZER_FOR_DOC,
         checkpoint="microsoft/dialogrpt",
         output_type=SequenceClassifierOutputWithPast,
         config_class=_CONFIG_FOR_DOC,
@@ -1448,7 +1444,7 @@ class GPT2ForSequenceClassification(GPT2PreTrainedModel):
 class GPT2ForTokenClassification(GPT2PreTrainedModel):
     @add_start_docstrings_to_model_forward(GPT2_INPUTS_DOCSTRING.format("batch_size, sequence_length"))
     @add_code_sample_docstrings(
-        tokenizer_class=_TOKENIZER_FOR_DOC,
+        # tokenizer_class=_TOKENIZER_FOR_DOC,
         checkpoint=_CHECKPOINT_FOR_DOC,
         output_type=TokenClassifierOutput,
         config_class=_CONFIG_FOR_DOC,

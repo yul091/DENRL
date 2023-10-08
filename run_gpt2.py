@@ -25,6 +25,7 @@ import logging
 import os
 import random
 import sys
+sys.dont_write_bytecode = True
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from re import I
@@ -35,20 +36,15 @@ import numpy as np
 import torch
 import torch.nn as nn
 from datasets import ClassLabel, concatenate_datasets, load_dataset, load_metric
-from torch.utils import data
-from torch.utils.data.dataloader import DataLoader
-from torch.utils.data.dataset import Dataset
-from tqdm import tqdm
 
 import transformers
 from transformers import (
-    AutoConfig,
-    AutoModelForTokenClassification,
     AutoTokenizer,
     GPT2TokenizerFast,
     HfArgumentParser,
     PreTrainedTokenizerFast,
     TrainingArguments,
+    Trainer,
     set_seed,
 )
 from transformers.file_utils import (
@@ -61,12 +57,13 @@ from transformers.file_utils import (
     is_torch_tpu_available,
 )
 from transformers.modeling_utils import unwrap_model
-from models.modeling_gpt2 import GPT2ForTokenClassification
 from transformers.tokenization_utils_base import PreTrainedTokenizerBase
-from trainer import JointTrainer
 from transformers.trainer_utils import get_last_checkpoint, is_main_process
 from transformers.utils import check_min_version
 
+from models.modeling_gpt2 import GPT2ForTokenClassification
+from models.configuration_gpt2 import GPT2Config
+from trainer import JointTrainer
 
 if is_datasets_available():
     import datasets
@@ -85,13 +82,10 @@ check_min_version("4.5.0")
 
 logger = logging.getLogger(__name__)
 
-import atexit
-
-import line_profiler
-
-
-profile = line_profiler.LineProfiler()
-atexit.register(profile.print_stats)
+# import atexit
+# import line_profiler
+# profile = line_profiler.LineProfiler()
+# atexit.register(profile.print_stats)
 
 
 @dataclass
@@ -440,7 +434,7 @@ class Training_Pipeline:
         # download model & vocab.
         label2id = {l: i for i, l in enumerate(self.label_list)}
         id2label = {i: l for i, l in enumerate(self.label_list)}
-        config = AutoConfig.from_pretrained(
+        config = GPT2Config.from_pretrained(
             model_args.config_name if model_args.config_name else model_args.model_name_or_path,
             num_labels=num_labels,
             label2id=label2id,  # Workaround for GPT2 w/o predefined labels
@@ -464,7 +458,7 @@ class Training_Pipeline:
             add_prefix_space=True,  # Workaround for GPT2
         )
         self.tokenizer.pad_token = self.tokenizer.eos_token  # Workaround for GPT2
-        self.model = AutoModelForTokenClassification.from_pretrained(
+        self.model = GPT2ForTokenClassification.from_pretrained(
             model_args.model_name_or_path,
             from_tf=bool(".ckpt" in model_args.model_name_or_path),
             config=config,

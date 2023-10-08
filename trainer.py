@@ -31,8 +31,6 @@ from logging import StreamHandler
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple, Union
 
-from tqdm import tqdm
-
 
 # Integrations must be imported before ML frameworks:
 from transformers.integrations import (  # isort: split
@@ -44,10 +42,7 @@ from transformers.integrations import (  # isort: split
     is_ray_tune_available,
     run_hp_search_optuna,
     run_hp_search_ray,
-    init_deepspeed,
 )
-
-from contextlib import contextmanager
 
 import numpy as np
 import torch
@@ -118,8 +113,8 @@ from transformers.trainer_utils import (
 )
 from transformers.training_args import ParallelMode, TrainingArguments
 from transformers.utils import logging
-from .modeling_auto_mapping import MODEL_FOR_QUESTION_ANSWERING_MAPPING_NAMES
-
+from modeling_auto_mapping import MODEL_FOR_QUESTION_ANSWERING_MAPPING_NAMES
+from utils import init_deepspeed
 
 _is_native_amp_available = False
 
@@ -248,7 +243,7 @@ class Trainer:
 
     """
 
-    from .trainer_pt_utils import _get_learning_rate, log_metrics, metrics_format, save_metrics, save_state
+    from transformers.trainer_pt_utils import _get_learning_rate, log_metrics, metrics_format, save_metrics, save_state
 
     def __init__(
         self,
