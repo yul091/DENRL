@@ -1,5 +1,5 @@
 # DENRL
-Distantly-Supervised Joint Entity and Relation Extraction with Noise-Robust Learning
+Distantly-Supervised Joint Entity and Relation Extraction with Noise-Robust Learning ([PDF](https://arxiv.org/pdf/2310.04994.pdf))
 
 
 ### Quick Start
@@ -44,4 +44,15 @@ python run_jointmodel.py \
     --gradient_accumulation_steps 16 --overwrite_cache \
     --use_negative_sampling --sample_rate 0.1 --num_train_epochs 100 \
     --beta 1.0 --alpha 0.5 --boot_start_epoch 5 --threshold 0.5 --baseline
-``` 
+```
+
+### Citation
+If you find this repo useful, please cite our paper:
+```
+@article{li2023distantly,
+  title={Distantly-Supervised Joint Entity and Relation Extraction with Noise-Robust Learning},
+  author={Li, Yufei and Yu, Xiao and Guo, Yanghong and Liu, Yanchi and Chen, Haifeng and Liu, Cong},
+  journal={arXiv preprint arXiv:2310.04994},
+  year={2023}
+}
+```
