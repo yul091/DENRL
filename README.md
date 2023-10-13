@@ -2,7 +2,7 @@
 Distantly-Supervised Joint Entity and Relation Extraction with Noise-Robust Learning ([PDF](https://arxiv.org/pdf/2310.04994.pdf))
 
 <p align="center">
-  <img src="figure/DENRL_architecture.png" width="80%" height="80%">
+  <img src="figure/DENRL_architecture.png" width="100%" height="100%">
 </p>
 
 
