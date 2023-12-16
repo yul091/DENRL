@@ -1,6 +1,8 @@
 torch
 torchvision
-datasets
+datasets=2.6.2
 evaluate
 transformers[torch]==4.24.0
 seqeval
+gensim
+line_profiler
