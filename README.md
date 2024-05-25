@@ -1,5 +1,5 @@
 # DENRL
-Distantly-Supervised Joint Entity and Relation Extraction with Noise-Robust Learning ([PDF](https://arxiv.org/pdf/2310.04994.pdf))
+Codebase for the ACL 2024 Findings paper: "Distantly-Supervised Joint Extraction with Noise-Robust Learning" ([PDF](https://arxiv.org/pdf/2310.04994.pdf))
 
 <p align="center">
   <img src="figure/DENRL_architecture.png" width="100%" height="100%">
@@ -53,10 +53,10 @@ python run_jointmodel.py \
 ### Citation
 If you find this repo useful, please cite our paper:
 ```bibtex
-@article{li2023distantly,
-  title={Distantly-Supervised Joint Entity and Relation Extraction with Noise-Robust Learning},
+@inproceedings{li2023distantly,
+  title={Distantly-Supervised Joint Extraction with Noise-Robust Learning},
   author={Li, Yufei and Yu, Xiao and Guo, Yanghong and Liu, Yanchi and Chen, Haifeng and Liu, Cong},
-  journal={arXiv preprint arXiv:2310.04994},
-  year={2023}
+  booktitle={Findings of the Association for Computational Linguistics: ACL 2024},
+  year={2024},
 }
 ```
